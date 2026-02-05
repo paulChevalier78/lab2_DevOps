@@ -2,14 +2,18 @@ const db = require('../dbClient')
 
 module.exports = {
   create: (user, callback) => {
-    // Check parameters
+    // Check parameters - validate required fields
     if(!user.username)
       return callback(new Error("Wrong user parameters"), null)
-    // Create User schema
+    if(!user.firstname || !user.lastname)
+      return callback(new Error("Firstname and lastname are required"), null)
+    
+    // Sanitize user input
     const userObj = {
-      firstname: user.firstname,
-      lastname: user.lastname,
+      firstname: user.firstname.trim(),
+      lastname: user.lastname.trim(),
     }
+    
     // Save to DB
     // TODO check if user already exists
     db.hmset(user.username, userObj, (err, res) => {
