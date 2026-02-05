@@ -13,7 +13,7 @@ jobs:
     # Redis service container
     services:
       redis:
-        image: redis:latest
+        image: redis:alpine
         ports:
           - 6379:6379
         options: >-
@@ -35,6 +35,12 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
     
+    - name: Verify Redis connection
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y redis-tools
+        redis-cli -h localhost -p 6379 ping
+    
     - name: Install dependencies
       working-directory: ./lab
       run: npm install
@@ -42,3 +48,6 @@ jobs:
     - name: Run tests
       working-directory: ./lab
       run: npm test
+      env:
+        REDIS_HOST: localhost
+        REDIS_PORT: 6379
