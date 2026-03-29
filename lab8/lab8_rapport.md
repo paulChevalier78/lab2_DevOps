@@ -37,7 +37,7 @@
 
 4 - On réduit notre déploiement à 2 pods et on vérifie que les 3 autres ne sont plus en cours d'exécution avec 'get pods' :
 
-![Texte](7p.png "image9")
+![Texte](7.png "image9")
 
 On voit bien que le STATUS de 3 des 5 pods précédent sont passés de 'Running' à 'Terminating'
 
